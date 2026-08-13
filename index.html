@@ -604,33 +604,26 @@ function spinBonusWheel(){
   }
 }
 
-/* =========================================
-   💸 WITHDRAW FUNCTION (UPDATED)
-========================================= */
-function withdraw(){
-  const phone = localStorage.getItem("lastPhone") || "";
-  const name = localStorage.getItem("lastName") || "";
-  const code = localStorage.getItem("lastCode") || document.getElementById("code").value.trim();
+function openCashoutPopup(mode){
 
-  const w = getWallet(phone);
+  const phone = document.getElementById("phone").value.trim();
+  const name = document.getElementById("name").value.trim();
 
-  if(!w || Number(w.cash) < 5){
-    return showMsg(
-      "💸",
-      "পর্যাপ্ত ক্যাশ নেই",
-      "ক্যাশ আউট করতে কমপক্ষে ₹5 ক্যাশ থাকতে হবে।"
-    );
+  if(!phone){
+    // ফোন না থাকলেও Popup খুলবে
   }
 
-  /* নাম ও ফোন Popup */
+  const walletPhone = phone || localStorage.getItem("lastPhone") || "";
+  const w = walletPhone ? getWallet(walletPhone) : {cash:0,point:0,gm:0};
+
   const popup = document.createElement("div");
 
   popup.style.cssText = `
     position:fixed;
     inset:0;
-    background:rgba(0,0,0,.75);
-    backdrop-filter:blur(5px);
-    z-index:999999;
+    background:rgba(0,0,0,.78);
+    backdrop-filter:blur(6px);
+    z-index:9999999;
     display:flex;
     justify-content:center;
     align-items:center;
@@ -649,15 +642,15 @@ function withdraw(){
       text-align:center;
     ">
 
-      <div style="font-size:48px">💸</div>
+      <div style="font-size:50px">💸</div>
 
       <div style="
         font-size:25px;
         font-weight:900;
         color:#e91e63;
-        margin-bottom:15px;
+        margin:5px 0 10px;
       ">
-        ক্যাশ আউট
+        ${mode==="whatsapp" ? "WhatsApp ক্যাশ আউট" : "ক্যাশ আউট"}
       </div>
 
       <div style="
@@ -666,16 +659,16 @@ function withdraw(){
         color:#00a651;
         margin-bottom:15px;
       ">
-        ₹${Number(w.cash).toFixed(2)} টাকা
+        বর্তমান Cash: ₹${Number(w.cash||0).toFixed(2)}
       </div>
 
       <input id="cashoutName"
         value="${name.replace(/"/g,"&quot;")}"
-        placeholder="👤 আপনার নাম"
+        placeholder="👤 আপনার নাম লিখুন"
         style="
           width:100%;
-          padding:13px;
-          margin:7px 0;
+          padding:14px;
+          margin:6px 0;
           border:2px solid #ffd700;
           border-radius:12px;
           font-size:16px;
@@ -684,253 +677,14 @@ function withdraw(){
         ">
 
       <input id="cashoutPhone"
-        value="${phone}"
-        inputmode="numeric"
-        maxlength="10"
-        placeholder="📱 ফোন নাম্বার"
-        style="
-          width:100%;
-          padding:13px;
-          margin:7px 0 15px;
-          border:2px solid #ffd700;
-          border-radius:12px;
-          font-size:16px;
-          font-weight:700;
-          outline:none;
-        ">
-
-      <button id="cashoutSubmit"
-        style="
-          width:100%;
-          padding:13px;
-          border:0;
-          border-radius:30px;
-          background:#00c853;
-          color:#fff;
-          font-size:18px;
-          font-weight:900;
-          box-shadow:0 5px 15px #0003;
-        ">
-        💸 ক্যাশ আউট করুন
-      </button>
-
-      <button id="cashoutCancel"
-        style="
-          width:100%;
-          padding:10px;
-          margin-top:8px;
-          border:0;
-          border-radius:30px;
-          background:#f44336;
-          color:#fff;
-          font-size:15px;
-          font-weight:800;
-        ">
-        ❌ বাতিল
-      </button>
-
-    </div>
-  `;
-
-  document.body.appendChild(popup);
-
-  popup.querySelector("#cashoutCancel").onclick = () => {
-    popup.remove();
-  };
-
-  popup.querySelector("#cashoutSubmit").onclick = async () => {
-
-    const userName = document.getElementById("cashoutName").value.trim();
-    const userPhone = document.getElementById("cashoutPhone").value.trim();
-
-    if(!userName){
-      return showMsg("👤","নাম দিন","আপনার নাম লিখুন।");
-    }
-
-    if(!/^\d{10}$/.test(userPhone)){
-      return showMsg("📱","ভুল ফোন নাম্বার","১০ ডিজিটের সঠিক ফোন নাম্বার দিন।");
-  }
-  const btn = document.getElementById("cashoutSubmit");
-
-    btn.disabled = true;
-    btn.innerHTML = "⏳ Request পাঠানো হচ্ছে...";
-
-    const cash = Number(w.cash);
-    const points = Number(w.point) || 0;
-    const mushroom = Number(w.gm) || 0;
-
-    try{
-
-      await fetch(PAYMENT_API,{
-        method:"POST",
-        mode:"no-cors",
-        body:new URLSearchParams({
-          action:"withdraw",
-          code:code,
-          name:userName,
-          phone:userPhone,
-          cash:cash,
-          points:points,
-          mushroom:mushroom
-        })
-      });
-
-      /* WhatsApp message */
-      const msg = 
-`✨ নতুন Cash Out Request
-
-👤 নাম: ${userName}
-📞 ফোন: ${userPhone}
-
-💸 Cash: ₹${cash.toFixed(2)}
-🪙 Points: ${points}
-🍄 Mushroom: ${mushroom} gm
-
-🔑 Code: ${code}`;
-
-      /* Wallet reset (Points and Mushroom will remain) */
-      localStorage.setItem(
-        "wallet_" + userPhone,
-        JSON.stringify({
-          cash: 0,
-          point: points,
-          gm: mushroom
-        })
-      );
-
-      localStorage.setItem("lastName", userName);
-      localStorage.setItem("lastPhone", userPhone);
-
-      updateUI(userPhone);
-
-      popup.remove();
-
-      /* Money sound */
-      playAudio("moneySound");
-
-      /* WhatsApp */
-      window.open(
-        "https://wa.me/" + ADMIN + "?text=" + encodeURIComponent(msg),
-        "_blank"
-      );
-
-      showMsg(
-        "✅",
-        "Request সফল",
-        `আপনার ₹${cash.toFixed(2)} Cash Out Request Sheet-এ পাঠানো হয়েছে।`
-      );
-
-    }catch(err){
-
-      btn.disabled = false;
-      btn.innerHTML = "💸 ক্যাশ আউট করুন";
-
-      showMsg(
-        "📡",
-        "Network Error",
-        "Request পাঠানো যায়নি। Internet connection পরীক্ষা করুন।"
-      );
-
-    }
-
-  };
-}
-
-/* =========================================
-   🟢 SEND WHATSAPP FUNCTION (UPDATED)
-========================================= */
-function sendWhatsApp(){
-
-  const phone = localStorage.getItem("lastPhone") || "";
-  const name = localStorage.getItem("lastName") || "";
-
-  /* Wallet খুঁজে বের করা */
-  const w = getWallet(phone);
-
-  if(!w || Number(w.cash) <= 0){
-    return showMsg(
-      "💸",
-      "ক্যাশ নেই",
-      "আপনার Wallet-এ কোনো Cash নেই।"
-    );
-  }
-
-  /* Name + Phone Popup */
-  const popup = document.createElement("div");
-
-  popup.style.cssText = `
-    position:fixed;
-    inset:0;
-    background:rgba(0,0,0,.78);
-    backdrop-filter:blur(5px);
-    z-index:999999;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    padding:15px;
-  `;
-
-  popup.innerHTML = `
-
-    <div style="
-      width:100%;
-      max-width:360px;
-      background:linear-gradient(180deg,#fffef5,#ffe082);
-      border:4px solid #ffd700;
-      border-radius:25px;
-      padding:22px;
-      box-shadow:0 0 35px #ffd700;
-      text-align:center;
-    ">
-
-      <div style="
-        font-size:50px;
-        margin-bottom:5px;
-      ">
-        💬
-      </div>
-
-      <div style="
-        font-size:25px;
-        font-weight:900;
-        color:#e91e63;
-        margin-bottom:8px;
-      ">
-        WhatsApp ক্যাশ আউট
-      </div>
-
-      <div style="
-        font-size:18px;
-        font-weight:900;
-        color:#00a651;
-        margin-bottom:15px;
-      ">
-        💸 ₹${Number(w.cash).toFixed(2)}
-      </div>
-
-      <input id="waName"
-        value="${name.replace(/"/g,"&quot;")}"
-        placeholder="👤 আপনার নাম লিখুন"
-        style="
-          width:100%;
-          padding:13px;
-          margin:7px 0;
-          border:2px solid #ffd700;
-          border-radius:12px;
-          font-size:16px;
-          font-weight:700;
-          outline:none;
-        ">
-
-      <input id="waPhone"
-        value="${phone}"
+        value="${walletPhone}"
         inputmode="numeric"
         maxlength="10"
         placeholder="📱 ফোন নাম্বার দিন"
         style="
           width:100%;
-          padding:13px;
-          margin:7px 0 15px;
+          padding:14px;
+          margin:6px 0 15px;
           border:2px solid #ffd700;
           border-radius:12px;
           font-size:16px;
@@ -938,22 +692,22 @@ function sendWhatsApp(){
           outline:none;
         ">
 
-      <button id="waSend"
+      <button id="cashoutOK"
         style="
           width:100%;
-          padding:13px;
+          padding:14px;
           border:0;
           border-radius:30px;
-          background:#25d366;
+          background:${mode==="whatsapp" ? "#25d366" : "#e91e63"};
           color:#fff;
           font-size:18px;
           font-weight:900;
           box-shadow:0 5px 15px #0003;
         ">
-        💬 WhatsApp-এ পাঠান
+        ${mode==="whatsapp" ? "💬 WhatsApp-এ পাঠান" : "💸 ক্যাশ আউট করুন"}
       </button>
 
-      <button id="waCancel"
+      <button id="cashoutClose"
         style="
           width:100%;
           padding:10px;
@@ -973,23 +727,20 @@ function sendWhatsApp(){
 
   document.body.appendChild(popup);
 
-  /* Cancel */
-  popup.querySelector("#waCancel").onclick = () => {
+  document.getElementById("cashoutClose").onclick = ()=>{
     popup.remove();
   };
 
-  /* WhatsApp Send */
-  popup.querySelector("#waSend").onclick = () => {
+  document.getElementById("cashoutOK").onclick = async ()=>{
 
-    const userName = document.getElementById("waName").value.trim();
-    const userPhone = document.getElementById("waPhone").value.trim();
+    const userName =
+      document.getElementById("cashoutName").value.trim();
+
+    const userPhone =
+      document.getElementById("cashoutPhone").value.trim();
 
     if(!userName){
-      return showMsg(
-        "👤",
-        "নাম দিন",
-        "আপনার নাম লিখুন।"
-      );
+      return showMsg("👤","নাম লিখুন","দয়া করে আপনার নাম লিখুন।");
     }
 
     if(!/^\d{10}$/.test(userPhone)){
@@ -1000,47 +751,172 @@ function sendWhatsApp(){
       );
     }
 
-    const cash = Number(w.cash) || 0;
-    const points = Number(w.point) || 0;
-    const mushroom = Number(w.gm) || 0;
+    const wallet = getWallet(userPhone);
+    const cash = Number(wallet.cash)||0;
+    const points = Number(wallet.point)||0;
+    const mushroom = Number(wallet.gm)||0;
 
-    const msg = 
-`✨ সম্মানিত গ্রাহক ✨
+    if(cash < 5){
+      popup.remove();
 
-💸 WhatsApp Cash Out Request
+      return showMsg(
+        "💸",
+        "পর্যাপ্ত ক্যাশ নেই",
+        "ক্যাশ আউট করতে কমপক্ষে ₹5 Cash থাকতে হবে।"
+      );
+    }
+
+    const code =
+      document.getElementById("code").value.trim() ||
+      localStorage.getItem("lastCode") ||
+      "";
+
+    /*
+      ==========================
+      NORMAL CASH OUT
+      ==========================
+    */
+
+    if(mode==="withdraw"){
+
+      try{
+
+        await fetch(PAYMENT_API,{
+          method:"POST",
+          mode:"no-cors",
+          body:new URLSearchParams({
+            action:"withdraw",
+            code:code,
+            name:userName,
+            phone:userPhone,
+            cash:cash,
+            points:points,
+            mushroom:mushroom
+          })
+        });
+
+      }catch(err){
+        console.log(err);
+      }
+
+      /*
+        শুধু CASH = 0
+        Points + Mushroom থাকবে
+      */
+
+      localStorage.setItem(
+        "wallet_"+userPhone,
+        JSON.stringify({
+          cash:0,
+          point:points,
+          gm:mushroom
+        })
+      );
+
+      localStorage.setItem("lastName",userName);
+      localStorage.setItem("lastPhone",userPhone);
+      localStorage.setItem("lastCode",code);
+
+      updateUI(userPhone);
+
+      popup.remove();
+
+      playAudio("moneySound");
+
+      showMsg(
+        "✅",
+        "Cash Out Request পাঠানো হয়েছে",
+        `₹${cash.toFixed(2)} Cash Out Request সফলভাবে পাঠানো হয়েছে।`
+      );
+
+      return;
+    }
+
+    /*
+      ==========================
+      WHATSAPP CASH OUT
+      ==========================
+    */
+
+    if(mode==="whatsapp"){
+
+      const message =
+`✨ Cash Out Request ✨
 
 👤 নাম: ${userName}
 📞 ফোন: ${userPhone}
 
-💰 Cash: ₹${cash.toFixed(2)}
+💸 Cash: ₹${cash.toFixed(2)}
 🪙 Points: ${points}
 🍄 Mushroom: ${mushroom} gm
 
-🙏 অনুগ্রহ করে Cash Out Request যাচাই করুন।`;
+🔑 Code: ${code}`;
 
-    /* Money Sound */
-    playAudio("moneySound");
+      localStorage.setItem("lastName",userName);
+      localStorage.setItem("lastPhone",userPhone);
+      localStorage.setItem("lastCode",code);
 
-    /* WhatsApp Open */
-    window.open(
-      "https://wa.me/" + ADMIN + "?text=" + encodeURIComponent(msg),
-      "_blank"
-    );
+      /*
+        শুধু Cash 0
+      */
 
-    /* তথ্য Save */
-    localStorage.setItem("lastName", userName);
-    localStorage.setItem("lastPhone", userPhone);
+      localStorage.setItem(
+        "wallet_"+userPhone,
+        JSON.stringify({
+          cash:0,
+          point:points,
+          gm:mushroom
+        })
+      );
 
-    /* Popup বন্ধ */
-    popup.remove();
+      updateUI(userPhone);
 
-    /* সফল Message */
-    showMsg(
-      "✅",
-      "WhatsApp প্রস্তুত",
-      "আপনার Cash Out Request WhatsApp-এ পাঠানোর জন্য প্রস্তুত হয়েছে।"
-    );
+      popup.remove();
+
+      /*
+        Money sound
+      */
+
+      playAudio("moneySound");
+
+      /*
+        WhatsApp
+      */
+
+      window.open(
+        "https://wa.me/"+ADMIN+
+        "?text="+encodeURIComponent(message),
+        "_blank"
+      );
+
+      showMsg(
+        "✅",
+        "WhatsApp Cash Out",
+        "আপনার Cash Out Request WhatsApp-এ পাঠানো হয়েছে।"
+      );
+    }
+
   };
+}
+
+
+/* =========================
+   CASH OUT BUTTON
+   ========================= */
+
+function withdraw(){
+  openCashoutPopup("withdraw");
+}
+
+
+/* =========================
+   WHATSAPP CASH OUT BUTTON
+   ========================= */
+
+function sendWhatsApp(){
+  openCashoutPopup("whatsapp");
+  }
+
   }function animateCoins(){
   const e=document.getElementById("coinLayer"),t=document.querySelector(".wallet").getBoundingClientRect();
   for(let n=0;n<25;n++){
