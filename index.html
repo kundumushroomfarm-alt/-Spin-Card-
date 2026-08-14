@@ -109,7 +109,8 @@ body.dark .wallet-item .label{color:#ccc}
 #ledRing{position:absolute;left:-12px;top:-12px;width:274px;height:274px;border-radius:50%;pointer-events:none;animation:ringRotate 6s linear infinite,ledPulse .6s infinite alternate;background:conic-gradient(#ff0000,#ffd700,#00ff00,#00e5ff,#2979ff,#ff00ff,#ff9800,#ff0000);mask:radial-gradient(circle,transparent 116px,#000 118px,#000 130px,transparent 132px);-webkit-mask:radial-gradient(circle,transparent 116px,#000 118px,#000 130px,transparent 132px);filter:drop-shadow(0 0 8px gold) drop-shadow(0 0 15px #ffd700)}
 @keyframes ringRotate{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
 @keyframes ledPulse{from{filter:drop-shadow(0 0 5px gold) brightness(.9)}to{filter:drop-shadow(0 0 18px gold) drop-shadow(0 0 28px #fff176) brightness(1.3)}}
-.star{position:absolute;width:8px;height:8px;background:#ffd700;clip-path:polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%);animation:twinkle 1s infinite alternate}@keyframes twinkle{0%{opacity:.3;transform:scale(.7)}100%{opacity:1;transform:scale(1.3)}}
+.star{position:absolute;width:8px;height:8px;background:#ffd700;clip-path:polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%);animation:twinkle 1s infinite alternate}
+@keyframes twinkle{0%{opacity:.3;transform:scale(.7)}100%{opacity:1;transform:scale(1.3)}}
 .mysteryBox{margin:8px 0;padding:8px;background:#fff8dc;border:2px solid gold;border-radius:10px}
 body.dark .mysteryBox{background:#333}
 .mbTitle{font-size:16px;font-weight:900;color:#ff1744;margin-bottom:6px}
@@ -152,8 +153,7 @@ body.dark #progressText{color:#ccc}
 .live-header{height:60px;justify-content:space-between;padding:0 15px;background:linear-gradient(90deg,#e91e63,#c2185b)}
 .live-content{height:calc(100% - 110px);overflow:auto;padding:10px;background:#fafafa}
 .feed-item{display:flex;justify-content:space-between;align-items:center;padding:12px;margin:8px 0;background:#fff;border:1px solid #ddd;border-radius:12px;box-shadow:0 2px 8px #0002;font:700 17px sans-serif;transition:.3s;color:#000}
-.feed-item:first-child{background:#fff8dc;border:2px solid gold;animation:b .8s infinite alternate}
-@keyframes b{from{transform:scale(1)}to{transform:scale(1.02)}}
+.feed-item:first-child{background:#fff8dc;border:2px solid gold;animation:b .8s infinite alternate}@keyframes b{from{transform:scale(1)}to{transform:scale(1.02)}}
 .live-footer{height:50px;justify-content:center;background:#e91e63}
 #s{position:fixed;inset:0;z-index:999999;background:#000;display:flex;justify-content:center;align-items:center;transition:.5s}
 #bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
@@ -191,7 +191,8 @@ button:active,.small-btn:active,.btn-spin:active,.btn-live-toggle:active,#instal
 #installBtn{background:linear-gradient(135deg,#66bb6a,#4caf50,#2e7d32)!important;border:1px solid #b9f6ca}
 </style>
 </head>
-<body><div id="s">
+<body>
+  <div id="s">
   <img id="bg" src="img/splash1.jpg">
   <img id="gif">
   <div id="loadingBox">
@@ -204,7 +205,7 @@ button:active,.small-btn:active,.btn-spin:active,.btn-live-toggle:active,#instal
 
 <!-- AUDIO ELEMENTS -->
 <audio id="pS" src="https://assets.mixkit.co/active_storage/sfx/270/270-preview.mp3" preload="auto"></audio>
-<audio id="welcomeSound" src="welcome.mp3" preload="auto"></audio>
+<audio id="welcomeSound" src="audio/welcome.mp3" preload="auto"></audio>
 <audio id="moneySound" src="audio/money.mp3" preload="auto"></audio>
 <audio id="whatsappMoneySound" src="money.mp3" preload="auto"></audio>
 <audio id="bgMusic" loop preload="auto"><source src="https://files.catbox.moe/po27od.mp3" type="audio/mpeg"></audio>
@@ -286,9 +287,7 @@ button:active,.small-btn:active,.btn-spin:active,.btn-live-toggle:active,#instal
     </div>
     <button class="btn-spin" onclick="spinBonusWheel()" style="background:#00e5ff;margin:6px auto;animation:none;color:#000;font-size:16px;padding:10px;width:90%"><span style="color:#000!important;font-weight:900">ঘুরাও!</span></button>
   </div>
-</div>
-
-<div id="winPopup" class="winPopup">
+      </div><div id="winPopup" class="winPopup">
   <div class="winCard">
     <div class="goldRing"></div>
     <div class="trophy">🏆</div>
@@ -328,17 +327,6 @@ document.addEventListener("click",e=>{
   e.target.closest("button, a, .close-btn, .small-btn, [onclick]")&&playClickSound()
 });
 
-let welcomePlayed = false;
-
-function playWelcomeSound(){
-  if(welcomePlayed) return;
-  const audio = document.getElementById("welcomeSound");
-  if(audio){
-    audio.currentTime = 0;
-    audio.play().then(()=>{ welcomePlayed = true; }).catch(()=>{});
-  }
-}
-
 function playMoneySound(){
   const audio = document.getElementById("moneySound");
   if(audio){ audio.currentTime = 0; audio.play().catch(()=>{}); }
@@ -349,10 +337,42 @@ function playWhatsAppMoneySound(){
   if(audio){ audio.currentTime = 0; audio.play().catch(()=>{}); }
 }
 
-window.addEventListener("load", playWelcomeSound);
-document.addEventListener("pointerdown", playWelcomeSound, {once:true});
-  const rewardsDisplay=["80 গ্রাম ছাতু","800 🪙 Pt","60 গ্রাম ছাতু","₹ 12  💵","1000 🪙 Pt","₹ 10  💵","1200 🪙 Pt","₹ 50 💵"],
-bonusRewards=["10 গ্রাম ছাতু","₹ 0.50  💵","110 🪙 Pt","15 গ্রাম ছাতু","₹ 1.10 💵","🍄 150 G"],
+const rewardsDisplay=["80 গ্রাম ছাতু","800 🪙 Pt","60 গ্রাম ছাতু","₹ 12  💵","1000 🪙 Pt","₹ 10  💵","1200 🪙 Pt","₹ 50 💵"];
+
+// ===== JACKPOT PROBABILITY SYSTEM =====
+function getRewardIndex(){
+  let rand=Math.random();
+
+  // Rare Jackpot 0.02 (প্রায় ৫০ বারে ১ বার)
+  if(rand < 0.02){
+    return rewardsDisplay.findIndex(x=>x.includes("₹ 50"));
+  }
+  // Normal Lucky 0.05 (প্রায় ২০ বারে ১ বার)
+  else if(rand < 0.07){
+    let lucky=[
+      "₹ 12  💵",
+      "1000 🪙 Pt",
+      "1200 🪙 Pt"
+    ];
+    return rewardsDisplay.findIndex(x=>x===lucky[Math.floor(Math.random()*lucky.length)]);
+  }
+  // Medium 0.10 (প্রায় ১০ বারে ১ বার)
+  else if(rand < 0.17){
+    let medium=[
+      "80 গ্রাম ছাতু",
+      "800 🪙 Pt",
+      "60 গ্রাম ছাতু",
+      "₹ 10  💵"
+    ];
+    return rewardsDisplay.findIndex(x=>x===medium[Math.floor(Math.random()*medium.length)]);
+  }
+  // Normal reward
+  else{
+    return Math.floor(Math.random()*rewardsDisplay.length);
+  }
+}
+
+const bonusRewards=["10 গ্রাম ছাতু","₹ 0.50  💵","110 🪙 Pt","15 গ্রাম ছাতু","₹ 1.10 💵","🍄 150 G"],
 colors=["#FFF","#FF1744","#FFF","#FF1744","#FFF","#FF1744","#FFF","#FF1744"],
 bonusColors=["#fff","#ffd700","#fff","#ffd700","#fff","#ffd700","#e74c3c"],
 fakeNames=["কাকলি দাস (গঞ্জে)","পাখি দও (বালি)","পায়েল মন্ডল (দামোদর পুর)","Suman Kundu (কালতা)","রচনা মাঝি (সহায়)","Rina Bag (মানিক পাট)","রাহুল দাস (সাওড়া)","Bablu Pal (আরাম বাগ)","সুমন Ghosh (সালেপু্র)","Tanmay Dutta (গঞ্জে)","বিজয় রানা (কালতা)"];
@@ -419,6 +439,7 @@ function showStars(){
 }
 
 document.addEventListener("DOMContentLoaded",()=>{
+  playAudio("welcomeSound");
   autoTheme();
   setInterval(autoTheme,6e4);
   updateProgress();
@@ -559,22 +580,20 @@ function drawWheel(e,t,n,o,a){
   let f=r.createLinearGradient(s-20,s-20,s+20,s+20);
   f.addColorStop(0,"#FF9800");f.addColorStop(.5,"#FF4081");f.addColorStop(1,"#FF5722");
   r.beginPath();r.arc(s,s,12,0,2*Math.PI);r.fillStyle=f;r.fill();
-}
-
-function spinTo(e){
+}function spinTo(e){
   const t=rewardsDisplay.length,n=360/t,o=270-e*n-n/2,a=360*(8+Math.floor(4*Math.random()));
   currentRotation+=a+(o-currentRotation%360);
   wheel.style.transform=`rotate(${currentRotation}deg)`;
-  }
-  async function spin(){
+}
+
+async function spin(){
   if(!lock){
     const o=document.getElementById("code").value.trim();
     if(!o) return stopAudio("spinSound"), void showMsg("⚠️","কোড দিন","দয়া করে আপনার কোডটি বসান!");
     
     lock=!0; playAudio("spinSound");
-    const a=rewardsDisplay.length, r=rewardsDisplay.findIndex(e=>e.includes("50"));
-    let s;
-    Math.random()<.35 ? s=Math.random()<.5?(r+1)%a:(r-1+a)%a : (()=>{do s=Math.floor(Math.random()*a);while(s===r)})();
+    
+    let s=getRewardIndex();
     
     wheel.classList.add("spin-blur");
     const c=document.getElementById("ledRing");
@@ -680,9 +699,7 @@ function spinBonusWheel(){
       lock=!1;
     },5e3);
   }
-}
-
-function openCashoutPopup(mode){
+  }function openCashoutPopup(mode){
   const lastPhone = localStorage.getItem("lastPhone") || "";
   const lastName = localStorage.getItem("lastName") || "";
   const w = lastPhone ? getWallet(lastPhone) : {cash:0,point:0,gm:0};
