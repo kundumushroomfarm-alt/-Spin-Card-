@@ -245,8 +245,7 @@ body.dark .wallet-item .label { color: #ccc; }
   mask: radial-gradient(circle, transparent 116px, #000 118px, #000 130px, transparent 132px);
   -webkit-mask: radial-gradient(circle, transparent 116px, #000 118px, #000 130px, transparent 132px);
   filter: drop-shadow(0 0 8px gold) drop-shadow(0 0 15px #ffd700);
-}
-@keyframes ringRotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+}@keyframes ringRotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 @keyframes ledPulse { from { filter: drop-shadow(0 0 5px gold) brightness(.9); } to { filter: drop-shadow(0 0 18px gold) drop-shadow(0 0 28px #fff176) brightness(1.3); } }
 
 .star {
@@ -258,7 +257,8 @@ body.dark .wallet-item .label { color: #ccc; }
   animation: twinkle 1s infinite alternate;
 }
 @keyframes twinkle { 0% { opacity: .3; transform: scale(.7); } 100% { opacity: 1; transform: scale(1.3); } }
-  .mysteryBox { margin: 8px 0; padding: 8px; background: #fff8dc; border: 2px solid gold; border-radius: 10px; }
+
+.mysteryBox { margin: 8px 0; padding: 8px; background: #fff8dc; border: 2px solid gold; border-radius: 10px; }
 body.dark .mysteryBox { background: #333; }
 .mbTitle { font-size: 16px; font-weight: 900; color: #ff1744; margin-bottom: 6px; }
 .progress { width: 100%; height: 18px; background: #ddd; border-radius: 20px; overflow: hidden; }
@@ -317,9 +317,7 @@ body.dark #progressText { color: #ccc; }
 #loadingBox { position: absolute; bottom: 70px; width: 85%; left: 50%; transform: translateX(-50%); text-align: center; }
 #loadingText { color: #fff; font-size: 20px; font-weight: 700; margin-bottom: 10px; }
 #loadingBar { width: 100%; height: 14px; background: #555; border-radius: 20px; overflow: hidden; }
-#loadingFill { width: 0%; height: 100%; background: linear-gradient(90deg, #00ff66, #ffd700, #ff1744); transition: .1s; }
-
-#coinLayer { position: fixed; inset: 0; pointer-events: none; overflow: hidden; z-index: 99999; }
+#loadingFill { width: 0%; height: 100%; background: linear-gradient(90deg, #00ff66, #ffd700, #ff1744); transition: .1s; }#coinLayer { position: fixed; inset: 0; pointer-events: none; overflow: hidden; z-index: 99999; }
 .flyCoin { position: absolute; font-size: 28px; animation: coinFly 1.6s linear forwards; }
 @keyframes coinFly { 0% { transform: translate(var(--sx), var(--sy)) scale(.5); opacity: 1; } 70% { opacity: 1; } 100% { transform: translate(var(--ex), var(--ey)) scale(.15); opacity: 0; } }
 
@@ -334,8 +332,7 @@ body.dark #progressText { color: #ccc; }
 .msgBtns button { flex: 1; padding: 12px; font-size: 16px; font-weight: 900; border: none; border-radius: 40px; color: #fff; cursor: pointer; background: #00c853; box-shadow: 0 4px 12px #0003; }
 
 /* ================================
-   ✨ PREMIUM NEW BUTTON DESIGN
-   Size & Layout SAME — Design ONLY
+   ✨ BUTTON DESIGN
 ================================ */
 button,
 .small-btn,
@@ -456,9 +453,7 @@ body.dark .btn-spin {
 }
 </style>
 </head>
-<body>
-
-<div id="s">
+<body><div id="s">
   <img id="bg" src="img/splash1.jpg">
   <img id="gif">
   <div id="loadingBox">
@@ -490,7 +485,6 @@ body.dark .btn-spin {
 
   <button id="installBtn">📲 Install App</button>
 
-  <!-- Only CODE Input Requirement -->
   <div class="input-box">
     <input id="code" placeholder=" " required>
     <label>🎁 কোড টি বসান</label>
@@ -506,7 +500,9 @@ body.dark .btn-spin {
     <div id="ledRing"></div>
     <div class="pointer"></div>
     <canvas id="wheel" width="250" height="250"></canvas>
-  </div><button id="spinBtn" class="btn-spin" onclick="spin()"><span class="spin-text">🎡 SPIN করুন</span></button>
+  </div>
+
+  <button id="spinBtn" class="btn-spin" onclick="spin()"><span class="spin-text">🎡 SPIN করুন</span></button>
 
   <div class="mysteryBox">
     <div class="mbTitle">🎁 Mystery Box</div>
@@ -565,8 +561,7 @@ body.dark .btn-spin {
     <button onclick="closeWinPopup()">🎁 COLLECT REWARD</button>
   </div>
 </div>
-
-<div id="coinLayer"></div>
+  <div id="coinLayer"></div>
 
 <div id="msgPopup" class="msgPopup">
   <div class="msgCard">
@@ -592,7 +587,6 @@ document.addEventListener("click", e => {
   e.target.closest("button, a, .close-btn, .small-btn, [onclick]") && playClickSound();
 });
 
-/* Sound System Setup */
 let welcomePlayed = false;
 function playWelcomeSound() {
   if (welcomePlayed) return;
@@ -620,8 +614,7 @@ const rewardsDisplay = ["80 গ্রাম ছাতু", "800 🪙 Pt", "60 �
       bonusColors = ["#fff", "#ffd700", "#fff", "#ffd700", "#fff", "#ffd700", "#e74c3c"],
       fakeNames = ["কাকলি দাস (গঞ্জে)", "পাখি দও (বালি)", "পায়েল মন্ডল (দামোদর পুর)", "Suman Kundu (কালতা)", "রচনা মাঝি (সহায়)", "Rina Bag (মানিক পাট)", "রাহুল দাস (সাওড়া)", "Bablu Pal (আরাম বাগ)", "সুমন ঘোষ (সালেপু্র)", "Tanmay Dutta (গঞ্জে)", "বিজয় রানা (কালতা)"];
 
-let usedCodes = JSON.parse(localStorage.getItem("usedCodes")) || [],
-    currentRotation = 0, bonusRotation = 0, lock = !1, convertTimer = {}, ADMIN = "917047643951", ledOn = !0,
+let currentRotation = 0, bonusRotation = 0, lock = !1, convertTimer = {}, ADMIN = "917047643951", ledOn = !0,
     spinCount = Number(localStorage.getItem("spinCount")) || 0;
 
 const bgMusic = document.getElementById("bgMusic"), wheel = document.getElementById("wheel"), bonusWheel = document.getElementById("bonusWheel"), feed = document.getElementById("feed"), livePopup = document.getElementById("livePopup"), wc = document.querySelector(".wheel-container"),
@@ -635,11 +628,6 @@ function showMsg(e, t, n) {
   document.getElementById("msgIcon").innerHTML = e, document.getElementById("msgTitle").innerHTML = t, document.getElementById("msgText").innerHTML = n, okBtn.style.display = "block", yesBtn.style.display = "none", noBtn.style.display = "none", msgPopup.style.display = "flex";
 }
 function closeMsg() { msgPopup.style.display = "none"; }
-function showConfirm(e, t, n, o, a) {
-  document.getElementById("msgIcon").innerHTML = e, document.getElementById("msgTitle").innerHTML = t, document.getElementById("msgText").innerHTML = n, okBtn.style.display = "none", yesBtn.style.display = "block", noBtn.style.display = "block", yesCallback = o, noCallback = a, msgPopup.style.display = "flex";
-}
-function msgYes() { closeMsg(); yesCallback(); }
-function msgNo() { closeMsg(); noCallback(); }
 
 function updateProgress() {
   let e = spinCount % 15 / 15 * 100;
@@ -673,8 +661,8 @@ document.addEventListener("DOMContentLoaded", () => {
   }, 500),
   drawWheel(wheel, rewardsDisplay, colors, 12, !1), drawWheel(bonusWheel, bonusRewards, bonusColors, 12, !0);
   
-  let p = localStorage.getItem("lastPhone");
-  if(p) updateUI(p);
+  let p = localStorage.getItem("lastPhone") || "guest";
+  updateUI(p);
 });
 
 document.body.addEventListener("click", () => bgMusic?.paused && (bgMusic.volume = .2, bgMusic.play().catch(() => {})), { once: !0 });
@@ -701,31 +689,52 @@ function showWinnerPopup(e, t, n) {
   let o = "cash" == e ? "💸" : "point" == e ? "🪙" : "🍄", a = "cash" == e ? "#00C853" : "point" == e ? "#FF9800" : "#2E7D32";
   document.getElementById("popupText").innerHTML = `<div style="font-size:70px">🏆</div><div style="font-size:28px;font-weight:900;color:#E91E63;margin:10px 0">🎉 অভিনন্দন 🎉</div><div style="font-size:24px;font-weight:bold;color:${a}">${o} ${t}</div><div style="margin-top:15px;font-size:16px;color:#444">আপনার পুরস্কার সফলভাবে যোগ হয়েছে।</div><button onclick="document.getElementById('popup').style.display='none'" style="margin-top:20px;padding:12px 35px;background:#00C853;color:#fff;font-size:18px;font-weight:bold;border:none;border-radius:30px;cursor:pointer">✔ ঠিক আছে</button>`, document.getElementById("popup").style.display = "flex", fireConfetti(), "point" == e ? speakBengali(`অভিনন্দন! আপনি ${n} পয়েন্ট জিতেছেন`) : speakBengali(`অভিনন্দন! আপনি ${t} জিতেছেন`);
 }
-
-function toggleLiveFeed() { livePopup.style.display = "block" == livePopup.style.display ? "none" : "block"; }
+  function toggleLiveFeed() { livePopup.style.display = "block" == livePopup.style.display ? "none" : "block"; }
 
 function addFakeWinner() {
   const e = ["এখনই", "১০ সেকেন্ড আগে", "৩০ সেকেন্ড আগে", "১ মিনিট আগে", "২ মিনিট আগে"], t = document.createElement("div");
   t.className = "feed-item", t.innerHTML = `<div><div><span style="color:#0f0">🟢</span> <b>${fakeNames[Math.random()*fakeNames.length|0]}</b></div><div style="font-size:13px;color:#666">🔴 <span style="background:#ff1744;color:#fff;padding:1px 5px;border-radius:8px;font-size:11px">LIVE</span> • ${e[Math.random()*e.length|0]}</div></div><div style="color:#e91e63;font-weight:700">${rewardsDisplay[Math.random()*rewardsDisplay.length|0]}</div>`, feed.prepend(t), feed.children.length > 30 && feed.lastChild.remove();
 }
 
-function getWallet(e) { return e ? JSON.parse(localStorage.getItem("wallet_" + e)) || { cash: 0, point: 0, gm: 0 } : { cash: 0, point: 0, gm: 0 }; }
+function getWallet(e) { 
+  if(!e) e = "guest";
+  return JSON.parse(localStorage.getItem("wallet_" + e)) || { cash: 0, point: 0, gm: 0 }; 
+}
 
+/* =========================================
+   ২) updateWallet এ guest ID হ্যান্ডলিং
+   ========================================= */
 function updateWallet(e, t, n) {
-  if (!e) return;
+  if(!e) {
+    e = "guest";
+  }
   let o = getWallet(e);
-  o[t] = +((Number(o[t]) || 0) + (Number(n) || 0)).toFixed(2), localStorage.setItem("wallet_" + e, JSON.stringify(o)), updateUI(e), clearTimeout(convertTimer[e]), convertTimer[e] = setTimeout(() => {
-    if (o = getWallet(e), o.point >= 800) {
+  o[t] = +((Number(o[t]) || 0) + (Number(n) || 0)).toFixed(2);
+  localStorage.setItem("wallet_" + e, JSON.stringify(o));
+  updateUI(e);
+
+  clearTimeout(convertTimer[e]);
+  convertTimer[e] = setTimeout(() => {
+    o = getWallet(e);
+    if (o.point >= 800) {
       let t = +(8 * o.point / 800).toFixed(2);
-      o.cash = +(o.cash + t).toFixed(2), speakBengali(`অভিনন্দন! ${o.point} পয়েন্ট থেকে ${t.toFixed(2)} টাকা ক্যাশে কনভার্ট হয়েছে`), o.point = 0;
+      o.cash = +(o.cash + t).toFixed(2);
+      speakBengali(`অভিনন্দন! ${o.point} পয়েন্ট থেকে ${t.toFixed(2)} টাকা ক্যাশে কনভার্ট হয়েছে`);
+      o.point = 0;
     }
     if (o.gm >= 60) {
       let t = +(8 * o.gm / 60).toFixed(2);
-      o.cash = +(o.cash + t).toFixed(2), speakBengali(`চমৎকার! ${o.gm} গ্রাম ছাতু থেকে ${t.toFixed(2)} টাকা ক্যাশে কনভার্ট হয়েছে`), o.gm = 0;
+      o.cash = +(o.cash + t).toFixed(2);
+      speakBengali(`চমৎকার! ${o.gm} গ্রাম ছাতু থেকে ${t.toFixed(2)} টাকা ক্যাশে কনভার্ট হয়েছে`);
+      o.gm = 0;
     }
-    localStorage.setItem("wallet_" + e, JSON.stringify(o)), updateUI(e), delete convertTimer[e];
+    localStorage.setItem("wallet_" + e, JSON.stringify(o));
+    updateUI(e);
+    delete convertTimer[e];
   }, 25e3);
-}function rollingCounter(e, t, n = 1200) {
+}
+
+function rollingCounter(e, t, n = 1200) {
   const o = document.getElementById(e);
   if (!o) return;
   o.classList.add("rolling");
@@ -737,13 +746,11 @@ function updateWallet(e, t, n) {
 }
 
 function updateUI(e) {
+  if(!e) e = localStorage.getItem("lastPhone") || "guest";
   let t = getWallet(e);
-  rollingCounter("cash", Number(t.cash)), rollingCounter("point", Number(t.point)), rollingCounter("gm", Number(t.gm));
-}
-
-function resetAllData(e) {
-  let t = getWallet(e);
-  t.cash = 0, t.point = 0, t.gm = 0, localStorage.setItem("wallet_" + e, JSON.stringify(t)), localStorage.removeItem("lastName"), localStorage.removeItem("lastPhone"), localStorage.removeItem("lastCode"), document.getElementById("code").value = "", updateUI("");
+  rollingCounter("cash", Number(t.cash));
+  rollingCounter("point", Number(t.point));
+  rollingCounter("gm", Number(t.gm));
 }
 
 function drawWheel(e, t, n, o, a) {
@@ -775,7 +782,9 @@ function spinTo(e) {
   currentRotation += a + (o - currentRotation % 360), wheel.style.transform = `rotate(${currentRotation}deg)`;
 }
 
-/* Updated Spin logic without Name and Phone fields */
+/* =========================================
+   ১) spin() শেষে ID চেক ও Reward Save
+   ========================================= */
 async function spin() {
   if (!lock) {
     const o = document.getElementById("code").value.trim();
@@ -805,15 +814,8 @@ async function spin() {
       stopAudio("spinSound"), wheel.classList.remove("spin-blur"), c && (c.style.animationDuration = "6s,.6s");
       const e = rewardsDisplay[s], aVal = parseInt(e.replace(/\D/g, "")) || 0, rType = e.includes("Cash") || e.includes("₹") ? "cash" : e.includes("Point") || e.includes("Pt") ? "point" : "gm";
       
-      // Store in Pending System until Cash Out details are given
-      let pending = JSON.parse(localStorage.getItem("pendingReward")) || { cash: 0, point: 0, gm: 0 };
-      pending[rType] = Number(pending[rType] || 0) + Number(aVal);
-      localStorage.setItem("pendingReward", JSON.stringify(pending));
-
-      let savedPhone = localStorage.getItem("lastPhone");
-      if(savedPhone) {
-        updateWallet(savedPhone, rType, aVal);
-      }
+      let saveID = localStorage.getItem("lastPhone") || "guest";
+      updateWallet(saveID, rType, aVal);
 
       localStorage.setItem("lastCode", o);
       showWinnerPopup(rType, e, aVal), spinCount++, localStorage.setItem("spinCount", spinCount), updateProgress(), lock = !1;
@@ -822,23 +824,17 @@ async function spin() {
       i.className = "feed-item real-winner", i.innerHTML = `<span>👤 Guest</span><span>🎉 ${"cash"==rType?aVal+" টাকা ক্যাশ":e} পেয়েছেন</span>`, feed.prepend(i), feed.children.length > 20 && feed.removeChild(feed.lastChild), spinCount % 15 == 0 && setTimeout(showMysteryBox, 1e3);
     }, 7e3);
   }
-}
-
-function showMysteryBox() {
-  const e = localStorage.getItem("lastPhone") || "",
+  }function showMysteryBox() {
+  const e = localStorage.getItem("lastPhone") || "guest",
         t = [{ type: "cash", value: 10, text: "💵 ₹10 Cashback" }, { type: "point", value: 1500, text: "🪙 1500 Points" }, { type: "gm", value: 100, text: "🍄 100g Mushroom" }, { type: "cash", value: 20, text: "💵 ₹20 Cashback" }, { type: "point", value: 1000, text: "🪙 1000 Points" }][Math.floor(5 * Math.random())];
   
-  let pending = JSON.parse(localStorage.getItem("pendingReward")) || { cash: 0, point: 0, gm: 0 };
-  pending[t.type] = Number(pending[t.type] || 0) + Number(t.value);
-  localStorage.setItem("pendingReward", JSON.stringify(pending));
-
-  if (e) updateWallet(e, t.type, t.value);
+  updateWallet(e, t.type, t.value);
   
   fireConfetti(), triggerVibration(), speakBengali("অভিনন্দন! আপনি মিস্ট্রি বক্স জিতেছেন"), document.getElementById("popupText").innerHTML = "🎁 <br><br><span style='font-size:30px'>MYSTERY BOX</span><br><br><span style='font-size:28px;color:#ff1744'>" + t.text + "</span>", document.getElementById("popup").style.display = "flex", spinCount = 0, localStorage.setItem("spinCount", 0), updateProgress();
 }
 
 function openBonus() {
-  let e = localStorage.getItem("lastPhone") || "";
+  let e = localStorage.getItem("lastPhone") || "guest";
   if (localStorage.getItem("bonus_" + e) === new Date().toDateString()) return showMsg("⏱️", "বোনাস নেওয়া হয়েছে", "আজকের বোনাস নিয়েছেন! আবার ২৪ ঘণ্টা পর চেষ্টা করুন।");
   document.getElementById("bonusPopup").style.display = "flex";
 }
@@ -855,11 +851,7 @@ function spinBonusWheel() {
       const tVal = bonusRewards[n], o = parseFloat(tVal.replace(/[^\d.]/g, "")) || 0;
       let a = tVal.includes("₹") ? "cash" : tVal.includes("Pt") || tVal.includes("🪙") ? "point" : "gm";
       
-      let pending = JSON.parse(localStorage.getItem("pendingReward")) || { cash: 0, point: 0, gm: 0 };
-      pending[a] = Number(pending[a] || 0) + Number(o);
-      localStorage.setItem("pendingReward", JSON.stringify(pending));
-
-      if(e !== "guest") updateWallet(e, a, o);
+      updateWallet(e, a, o);
 
       localStorage.setItem("bonus_" + e, new Date().toDateString()), document.getElementById("bonusStamp").style.display = "block", setTimeout(() => {
         document.getElementById("bonusStamp").style.display = "none", document.getElementById("bonusPopup").style.display = "none";
@@ -869,14 +861,16 @@ function spinBonusWheel() {
 }
 
 /* =========================================
-   Unified Modern Cash Out Popup System
+   ৩) Cashout এ guest reward ট্রান্সফার ব্যবস্থা
    ========================================= */
 function openCashoutPopup(mode) {
   const phone = localStorage.getItem("lastPhone") || "";
   const name = localStorage.getItem("lastName") || "";
 
-  const walletPhone = phone;
-  const w = walletPhone ? getWallet(walletPhone) : { cash: 0, point: 0, gm: 0 };
+  let w = getWallet(phone || "guest");
+  let guestW = getWallet("guest");
+
+  let totalDisplayCash = Number(w.cash || 0) + (phone ? Number(guestW.cash || 0) : 0);
 
   const popup = document.createElement("div");
   popup.style.cssText = `position:fixed;inset:0;background:rgba(0,0,0,.78);backdrop-filter:blur(6px);z-index:9999999;display:flex;justify-content:center;align-items:center;padding:15px;`;
@@ -888,10 +882,10 @@ function openCashoutPopup(mode) {
         ${mode === "whatsapp" ? "WhatsApp ক্যাশ আউট" : "ক্যাশ আউট"}
       </div>
       <div style="font-size:18px;font-weight:900;color:#00a651;margin-bottom:15px;">
-        বর্তমান Cash: ₹${Number(w.cash || 0).toFixed(2)}
+        বর্তমান Cash: ₹${totalDisplayCash.toFixed(2)}
       </div>
       <input id="cashoutName" value="${name.replace(/"/g, "&quot;")}" placeholder="👤 আপনার নাম লিখুন" style="width:100%;padding:14px;margin:6px 0;border:2px solid #ffd700;border-radius:12px;font-size:16px;font-weight:700;outline:none;">
-      <input id="cashoutPhone" value="${walletPhone}" inputmode="numeric" maxlength="10" placeholder="📱 ফোন নাম্বার দিন" style="width:100%;padding:14px;margin:6px 0 15px;border:2px solid #ffd700;border-radius:12px;font-size:16px;font-weight:700;outline:none;">
+      <input id="cashoutPhone" value="${phone}" inputmode="numeric" maxlength="10" placeholder="📱 ফোন নাম্বার দিন" style="width:100%;padding:14px;margin:6px 0 15px;border:2px solid #ffd700;border-radius:12px;font-size:16px;font-weight:700;outline:none;">
       <button id="cashoutOK" style="width:100%;padding:14px;border:0;border-radius:30px;background:${mode === "whatsapp" ? "#25d366" : "#e91e63"};color:#fff;font-size:18px;font-weight:900;box-shadow:0 5px 15px #0003;">
         ${mode === "whatsapp" ? "💬 WhatsApp-এ পাঠান" : "💸 ক্যাশ আউট করুন"}
       </button>
@@ -910,18 +904,19 @@ function openCashoutPopup(mode) {
     const userPhone = document.getElementById("cashoutPhone").value.trim();
 
     if (!userName) { return showMsg("👤", "নাম লিখুন", "দয়া করে আপনার নাম লিখুন।"); }
-    if (!/^\d{10}$/.test(userPhone)) { return showMsg("📱", "ভুল ফোন নাম্বার", "১০ ডিজিটের সঠিক ফোন নাম্বার দিন।"); }// Synchronize Pending Rewards into Wallet upon capturing Name & Phone
-    let pending = JSON.parse(localStorage.getItem("pendingReward")) || { cash: 0, point: 0, gm: 0 };
-    if (pending.cash || pending.point || pending.gm) {
-      let old = getWallet(userPhone);
-      old.cash += Number(pending.cash || 0);
-      old.point += Number(pending.point || 0);
-      old.gm += Number(pending.gm || 0);
-      localStorage.setItem("wallet_" + userPhone, JSON.stringify(old));
-      localStorage.removeItem("pendingReward");
-    }
+    if (!/^\d{10}$/.test(userPhone)) { return showMsg("📱", "ভুল ফোন নাম্বার", "১০ ডিজিটের সঠিক ফোন নাম্বার দিন।"); }
 
-    const wallet = getWallet(userPhone);
+    // Guest wallet data merge to userPhone wallet
+    let wallet = getWallet(userPhone);
+    let guestWallet = getWallet("guest");
+
+    wallet.cash += Number(guestWallet.cash || 0);
+    wallet.point += Number(guestWallet.point || 0);
+    wallet.gm += Number(guestWallet.gm || 0);
+
+    localStorage.setItem("wallet_" + userPhone, JSON.stringify(wallet));
+    localStorage.removeItem("wallet_guest"); // Clear guest wallet
+
     const cash = Number(wallet.cash) || 0;
     const points = Number(wallet.point) || 0;
     const mushroom = Number(wallet.gm) || 0;
