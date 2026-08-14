@@ -523,7 +523,6 @@ body.dark .btn-spin {
 <img id="finger" src="img/finger.png" alt="Guide">
 
 <!-- Audio Elements -->
-<audio id="pS" src="https://assets.mixkit.co/active_storage/sfx/270/270-preview.mp3" preload="auto"></audio>
 <audio id="bgMusic" loop preload="auto"><source src="https://files.catbox.moe/po27od.mp3" type="audio/mpeg"></audio>
 <audio id="spinSound" src="spin.mp3" preload="auto"></audio>
 <audio id="clapSound" src="clap.mp3" preload="auto"></audio>
@@ -636,14 +635,6 @@ body.dark .btn-spin {
 
 <script>
 const PAYMENT_API="https://script.google.com/macros/s/AKfycbw_U0Zavp4KZRaNuGyWkylNqwlu8z6g4Xfk7xVFLMbBdprMy87_uIiTHdR8zGQFiRKUpQ/exec";
-
-function playClickSound() {
-  var e = document.getElementById("pS");
-  e && (e.currentTime = 0, e.play().catch(() => {}));
-}
-document.addEventListener("click", e => {
-  e.target.closest("button, a, .close-btn, .small-btn, [onclick]") && playClickSound();
-});
 
 let welcomePlayed = false;
 function playWelcomeSound() {
