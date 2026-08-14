@@ -523,7 +523,7 @@ body.dark .btn-spin {
 <img id="finger" src="img/finger.png" alt="Guide">
 
 <!-- Audio Elements -->
-<source src="https://files.catbox.moe/po27od.mp3" type="audio/mpeg"></audio>
+<audio id="bgMusic" loop preload="auto"><source src="https://files.catbox.moe/po27od.mp3" type="audio/mpeg"></audio>
 <audio id="spinSound" src="spin.mp3" preload="auto"></audio>
 <audio id="clapSound" src="clap.mp3" preload="auto"></audio>
 <audio id="rewardSound" preload="auto"><source src="reward.mp3" type="audio/mpeg"></audio>
@@ -673,7 +673,7 @@ function playWhatsAppMoneySound() {
 window.addEventListener("load", () => { 
   setTimeout(() => { playWelcomeSound(); }, 500);
 
-  // Offer GIF popup logic (5 sec delay, auto-close after 8 sec)
+  // Offer GIF popup logic (9 sec delay, auto-close after 5 sec)
   setTimeout(() => {
     const offer = document.getElementById("offerPopup");
     if (offer) {
@@ -973,10 +973,10 @@ function openCashoutPopup(mode) {
       <input id="cashoutName" value="${name.replace(/"/g, "&quot;")}" placeholder="👤 আপনার নাম লিখুন" style="width:100%;padding:14px;margin:6px 0;border:2px solid #ffd700;border-radius:12px;font-size:16px;font-weight:700;outline:none;">
       <input id="cashoutPhone" value="${phone}" inputmode="numeric" maxlength="10" placeholder="📱 ফোন নাম্বার দিন" style="width:100%;padding:14px;margin:6px 0 15px;border:2px solid #ffd700;border-radius:12px;font-size:16px;font-weight:700;outline:none;">
       <button id="cashoutOK" style="width:100%;padding:14px;border:0;border-radius:30px;background:${mode === "whatsapp" ? "#25d366" : "#e91e63"};color:#fff;font-size:18px;font-weight:900;box-shadow:0 5px 15px #0003;">
-        ${mode === "whatsapp" ? "💬 WhatsApp-এ পাঠান" : "💸 ক্যাশ আউট করুন"}
+        ${mode === "whatsapp" ? "💬 WhatsApp-এ পাঠান" : "ক্যাশ 💸 আউট করুন"}
       </button>
       <button id="cashoutClose" style="width:100%;padding:10px;margin-top:8px;border:0;border-radius:30px;background:#f44336;color:#fff;font-size:15px;font-weight:800;">
-        ❌ বাতিল
+        ❌ বাতিল করুন 
       </button>
     </div>
   `;
@@ -1007,7 +1007,7 @@ function openCashoutPopup(mode) {
 
     if (cash < 5) {
       popup.remove();
-      return showMsg("💸", "পর্যাপ্ত ক্যাশ নেই", "ক্যাশ আউট করতে কমপক্ষে ₹5 Cash থাকতে হবে।");
+      return showMsg("💵", "পর্যাপ্ত ক্যাশ নেই", "ক্যাশ আউট করতে কমপক্ষে ₹5 Cash থাকতে হবে।");
     }
     const code = document.getElementById("code").value.trim() || localStorage.getItem("lastCode") || "";
 
@@ -1036,7 +1036,7 @@ function openCashoutPopup(mode) {
       popup.remove();
       playAudio("moneySound");
 
-      showMsg("✅", "Cash Out Request পাঠানো হয়েছে", `₹${cash.toFixed(2)} Cash Out Request সফলভাবে পাঠানো হয়েছে।`);
+      showMsg("🏦", "Cash Out Request পাঠানো হয়েছে", `₹${cash.toFixed(2)} Cash Out Request সফলভাবে পাঠানো হয়েছে।`);
       checkPayment();
       return;
     }
@@ -1053,7 +1053,7 @@ function openCashoutPopup(mode) {
       popup.remove();
 
       window.open("https://wa.me/" + ADMIN + "?text=" + encodeURIComponent(message), "_blank");
-      showMsg("✅", "WhatsApp Cash Out", "আপনার Cash Out Request WhatsApp-এ পাঠানো হয়েছে।");
+      showMsg("☑️", "WhatsApp Cash Out", "আপনার Cash Out Request WhatsApp-এ পাঠানো হয়েছে।");
     }
   };
   }function withdraw() { playMoneySound(); openCashoutPopup("withdraw"); }
