@@ -577,8 +577,7 @@ body.dark .btn-spin {
 </div>
 
 <script>
-const PAYMENT_API = "https://script.google.com/macros/s/AKfycbzBC2RC27FhqRd0FOCedJ_hc8wQW5aweRj1jBe0UBpvHW5a9CXLuYlmLRlqRLNnVwrk/exec";
-
+const PAYMENT_API="https://script.google.com/macros/s/AKfycbw_U0Zavp4KZRaNuGyWkylNqwlu8z6g4Xfk7xVFLMbBdprMy87_uIiTHdR8zGQFiRKUpQ/exec";
 function playClickSound() {
   var e = document.getElementById("pS");
   e && (e.currentTime = 0, e.play().catch(() => {}));
@@ -930,20 +929,18 @@ function openCashoutPopup(mode) {
 
     if (mode === "withdraw") {
       try {
-        await fetch(PAYMENT_API, {
-          method: "POST",
-          mode: "no-cors",
-          headers: { "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8" },
-          body: new URLSearchParams({
-            action: "withdraw",
-            code: code,
-            name: userName,
-            phone: userPhone,
-            cash: cash,
-            points: points,
-            mushroom: mushroom
-          })
-        });
+       await fetch(PAYMENT_API,{
+ method:"POST",
+ body:new URLSearchParams({
+   action:"withdraw",
+   code:code,
+   name:userName,
+   phone:userPhone,
+   cash:cash,
+   points:points,
+   mushroom:mushroom
+ })
+}); 
       } catch (err) { console.log(err); }
 
       localStorage.setItem("wallet_" + userPhone, JSON.stringify({ cash: 0, point: points, gm: mushroom }));
