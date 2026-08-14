@@ -515,7 +515,7 @@ body.dark .btn-spin {
   </div>
 </div>
 
-<!-- OFFER POPUP GIF (SHOWS AFTER 8 SECONDS) -->
+<!-- OFFER POPUP GIF (SHOWS AFTER 11 SECONDS) -->
 <div id="offerPopup" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,.7); z-index:999999; align-items:center; justify-content:center;">
   <img src="offer1.gif" style="max-width:90%; border-radius:20px;">
 </div>
@@ -673,7 +673,7 @@ function playWhatsAppMoneySound() {
 window.addEventListener("load", () => { 
   setTimeout(() => { playWelcomeSound(); }, 500);
 
-  // Offer GIF popup logic (9 sec delay, auto-close after 5 sec)
+  // Offer GIF popup logic (11 sec delay, auto-close after 4 sec)
   setTimeout(() => {
     const offer = document.getElementById("offerPopup");
     if (offer) {
