@@ -45,60 +45,118 @@ body {
 }
 body.dark .container { border-color: #444; }
 
+/* =====================================
+   MEGA JACKPOT OFFER PREMIUM DESIGN
+   Lucky UP TO ₹50 CASHBACK
+===================================== */
 .main-title {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
   font-size: 15px;
   font-weight: 900;
-  margin: 2px 0 6px;
+  margin: 4px 0 8px;
   color: #b8860b;
   line-height: 1.1;
-  animation: tP 2s infinite ease-in-out;
-}
-@keyframes tP {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.02); color: #ff416c; }
+  text-shadow:
+    0 2px 3px rgba(0,0,0,.45),
+    0 0 8px rgba(255,215,0,.35),
+    0 0 18px rgba(255,105,180,.30);
+  animation: titleGlow 2.5s ease-in-out infinite;
 }
 
-/* ===== ₹50 PREMIUM LIGHT PINK HERO ===== */
+@keyframes titleGlow {
+  0%, 100% {
+    filter: drop-shadow(0 0 4px rgba(255,215,0,.25));
+  }
+  50% {
+    filter: drop-shadow(0 0 15px rgba(255,215,0,.60))
+            drop-shadow(0 0 25px rgba(255,105,180,.35));
+  }
+}
+
+.cashback-gift {
+  display: inline-block;
+  animation: giftPop 1.5s infinite;
+}
+
+@keyframes giftPop {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.18) rotate(-8deg); }
+}
+
+/* ₹50 MEGA JACKPOT HERO */
 .cashback-amount {
   display: inline-block;
-  margin: 0 2px;
-  font-size: 1.45em;
-  line-height: .9;
+  margin: 0 4px;
+  font-size: 1.65em;
+  line-height: .85;
   font-weight: 1000;
+  letter-spacing: -1.5px;
+  position: relative;
+  z-index: 2;
   background: linear-gradient(
     180deg,
-    #fff0f7 0%,
-    #ffd1e6 25%,
-    #ff9fc5 50%,
-    #ff6fa8 75%,
-    #e94f88 100%
+    #ffffff 0%,
+    #fff9c4 12%,
+    #ffd700 30%,
+    #ff9800 50%,
+    #ff4081 72%,
+    #b0004b 100%
   );
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
   filter:
-    drop-shadow(0 2px 0 #9e315e)
-    drop-shadow(0 3px 3px rgba(0,0,0,.45))
-    drop-shadow(0 0 7px rgba(255,105,165,.55));
-  transform: translateY(1px);
-  animation: pinkMoneyGlow 1.8s ease-in-out infinite;
+    drop-shadow(0 2px 0 #7a0035)
+    drop-shadow(0 5px 5px rgba(0,0,0,.55))
+    drop-shadow(0 0 10px #ff9800)
+    drop-shadow(0 0 25px #ff4081);
+  animation: megaPulse 1.5s infinite, megaGlow 2s infinite alternate;
 }
 
-@keyframes pinkMoneyGlow {
-  0%, 100% {
-    transform: translateY(1px) scale(1);
-    filter:
-      drop-shadow(0 2px 0 #9e315e)
-      drop-shadow(0 3px 3px rgba(0,0,0,.45))
-      drop-shadow(0 0 5px rgba(255,105,165,.45));
+@keyframes megaPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.12); }
+}
+
+@keyframes megaGlow {
+  from {
+    filter: drop-shadow(0 2px 0 #7a0035) drop-shadow(0 0 8px #ff9800) drop-shadow(0 0 15px #ff4081);
   }
-  50% {
-    transform: translateY(1px) scale(1.055);
-    filter:
-      drop-shadow(0 2px 0 #9e315e)
-      drop-shadow(0 3px 4px rgba(0,0,0,.5))
-      drop-shadow(0 0 14px rgba(255,120,180,.9));
+  to {
+    filter: drop-shadow(0 3px 0 #7a0035) drop-shadow(0 0 20px #ffd700) drop-shadow(0 0 35px #ff1744);
   }
+}
+
+.cashback-amount::before {
+  content: "✨";
+  position: absolute;
+  left: -22px;
+  top: -14px;
+  font-size: .45em;
+  animation: starFloat 1.2s infinite;
+}
+
+.cashback-amount::after {
+  content: "🔥";
+  position: absolute;
+  right: -24px;
+  bottom: -10px;
+  font-size: .5em;
+  animation: fireJump .7s infinite alternate;
+}
+
+@keyframes starFloat {
+  0%, 100% { opacity: .4; transform: scale(.8) rotate(0deg); }
+  50% { opacity: 1; transform: scale(1.3) rotate(30deg); }
+}
+
+@keyframes fireJump {
+  from { transform: translateY(4px) scale(.9); }
+  to { transform: translateY(-5px) scale(1.2); }
 }
 
 .input-box { position: relative; margin: 8px 0; }
@@ -206,9 +264,7 @@ body.dark .wallet-item .label { color: #ccc; }
 .wallet-item span:last-child { display: block; margin-top: 2px; font-size: 16px; font-weight: 900; text-shadow: 0 0 4px gold; }
 .cash span:last-child { color: #e53935 !important; }
 .point span:last-child { color: #ff9800 !important; }
-.gm span:last-child { color: #2e7d32 !important; }
-
-.rolling { animation: rollGlow .4s infinite alternate; }
+.gm span:last-child { color: #2e7d32 !important; }.rolling { animation: rollGlow .4s infinite alternate; }
 @keyframes rollGlow { from { transform: scale(1); text-shadow: 0 0 4px gold; } to { transform: scale(1.12); text-shadow: 0 0 14px gold; } }
 
 .wheel-container { position: relative; width: 250px; height: 250px; margin: 8px auto; perspective: 1000px; }
@@ -245,7 +301,8 @@ body.dark .wallet-item .label { color: #ccc; }
   mask: radial-gradient(circle, transparent 116px, #000 118px, #000 130px, transparent 132px);
   -webkit-mask: radial-gradient(circle, transparent 116px, #000 118px, #000 130px, transparent 132px);
   filter: drop-shadow(0 0 8px gold) drop-shadow(0 0 15px #ffd700);
-}@keyframes ringRotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+}
+@keyframes ringRotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 @keyframes ledPulse { from { filter: drop-shadow(0 0 5px gold) brightness(.9); } to { filter: drop-shadow(0 0 18px gold) drop-shadow(0 0 28px #fff176) brightness(1.3); } }
 
 .star {
@@ -279,7 +336,6 @@ body.dark #progressText { color: #ccc; }
 
 #bonusPopup .popup-content { background: linear-gradient(135deg, #1e3c72, #2a5298, #7b1fa2); color: #fff; border: 4px solid #00e5ff; box-shadow: 0 0 35px #00e5ff; }
 #bonusStamp { display: none; position: absolute; top: 40%; left: 50%; transform: translate(-50%, -50%) rotate(-15deg); padding: 10px 20px; font-size: 24px; font-weight: 900; color: #fff; background: #e53935; border: 4px solid #fff; border-radius: 12px; box-shadow: 0 0 20px red; z-index: 999; }
-
 .winPopup { position: fixed; inset: 0; display: none; justify-content: center; align-items: center; background: #000000bf; backdrop-filter: blur(5px); z-index: 999999; }
 .winCard { width: 92%; max-width: 390px; padding: 28px; border-radius: 28px; background: linear-gradient(180deg, #fffef5, #ffe082, #fff8dc); border: 5px solid gold; text-align: center; position: relative; overflow: hidden; box-shadow: 0 0 40px gold; animation: popupAnim .45s; }
 @keyframes popupAnim { 0% { transform: scale(.2) rotate(-15deg); opacity: 0; } 60% { transform: scale(1.08); } 100% { transform: scale(1); } }
@@ -317,10 +373,10 @@ body.dark #progressText { color: #ccc; }
 #loadingBox { position: absolute; bottom: 70px; width: 85%; left: 50%; transform: translateX(-50%); text-align: center; }
 #loadingText { color: #fff; font-size: 20px; font-weight: 700; margin-bottom: 10px; }
 #loadingBar { width: 100%; height: 14px; background: #555; border-radius: 20px; overflow: hidden; }
-#loadingFill { width: 0%; height: 100%; background: linear-gradient(90deg, #00ff66, #ffd700, #ff1744); transition: .1s; }#coinLayer { position: fixed; inset: 0; pointer-events: none; overflow: hidden; z-index: 99999; }
+#loadingFill { width: 0%; height: 100%; background: linear-gradient(90deg, #00ff66, #ffd700, #ff1744); transition: .1s; }
+#coinLayer { position: fixed; inset: 0; pointer-events: none; overflow: hidden; z-index: 99999; }
 .flyCoin { position: absolute; font-size: 28px; animation: coinFly 1.6s linear forwards; }
 @keyframes coinFly { 0% { transform: translate(var(--sx), var(--sy)) scale(.5); opacity: 1; } 70% { opacity: 1; } 100% { transform: translate(var(--ex), var(--ey)) scale(.15); opacity: 0; } }
-
 .msgPopup { position: fixed; inset: 0; display: none; justify-content: center; align-items: center; background: rgba(0,0,0,.65); backdrop-filter: blur(4px); z-index: 999999; }
 .msgCard { width: 90%; max-width: 360px; padding: 22px; border-radius: 22px; background: linear-gradient(180deg, #fffef5, #ffe082); border: 4px solid gold; text-align: center; animation: pop .25s; box-shadow: 0 0 30px gold; }
 @keyframes pop { 0% { transform: scale(.4); opacity: 0; } 100% { transform: scale(1); } }
@@ -329,9 +385,7 @@ body.dark #progressText { color: #ccc; }
 .msgTitle { font-size: 24px; font-weight: 900; color: #e91e63; }
 .msgText { margin: 14px 0; font-size: 17px; font-weight: 700; color: #333; line-height: 1.5; }
 .msgBtns { display: flex; gap: 10px; justify-content: center; }
-.msgBtns button { flex: 1; padding: 12px; font-size: 16px; font-weight: 900; border: none; border-radius: 40px; color: #fff; cursor: pointer; background: #00c853; box-shadow: 0 4px 12px #0003; }
-
-/* ================================
+.msgBtns button { flex: 1; padding: 12px; font-size: 16px; font-weight: 900; border: none; border-radius: 40px; color: #fff; cursor: pointer; background: #00c853; box-shadow: 0 4px 12px #0003; }/* ================================
    ✨ BUTTON DESIGN
 ================================ */
 button,
@@ -362,7 +416,6 @@ button::before,
   transition: left .55s ease;
   pointer-events: none;
 }
-
 button:hover,
 .small-btn:hover,
 .btn-spin:hover,
@@ -438,7 +491,6 @@ button:active,
   border: 1px solid rgba(255,255,255,.5);
   box-shadow: 0 5px 14px rgba(0,0,0,.25), inset 0 1px 2px rgba(255,255,255,.35);
 }
-
 #bonusPopup .btn-spin {
   border: 2px solid #00e5ff;
   box-shadow: 0 0 12px rgba(0,229,255,.5), 0 5px 15px rgba(0,0,0,.3);
@@ -453,7 +505,8 @@ body.dark .btn-spin {
 }
 </style>
 </head>
-<body><div id="s">
+<body>
+<div id="s">
   <img id="bg" src="img/splash1.jpg">
   <img id="gif">
   <div id="loadingBox">
@@ -462,12 +515,18 @@ body.dark .btn-spin {
   </div>
 </div>
 
+<!-- OFFER POPUP GIF (SHOWS AFTER 5 SECONDS) -->
+<div id="offerPopup" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,.7); z-index:999999; align-items:center; justify-content:center;">
+  <img src="offer1.gif" style="max-width:90%; border-radius:20px;">
+</div>
+
 <img id="finger" src="img/finger.png" alt="Guide">
 
 <!-- Audio Elements -->
 <audio id="pS" src="https://assets.mixkit.co/active_storage/sfx/270/270-preview.mp3" preload="auto"></audio>
 <audio id="bgMusic" loop preload="auto"><source src="https://files.catbox.moe/po27od.mp3" type="audio/mpeg"></audio>
-<audio id="spinSound" src="spin.wav" preload="auto"></audio>
+<audio id="spinSound" src="spin.mp3" preload="auto"></audio>
+<audio id="clapSound" src="clap.mp3" preload="auto"></audio>
 <audio id="rewardSound" preload="auto"><source src="reward.mp3" type="audio/mpeg"></audio>
 <audio id="bonusSound" preload="auto"><source src="audio/bonus.mp3" type="audio/mpeg"></audio>
 <audio id="welcomeSound" src="welcome.mp3" preload="auto"></audio>
@@ -518,9 +577,7 @@ body.dark .btn-spin {
   <div class="btn-group">
     <a class="small-btn order-btn" href="https://kundu-mushroom-farm.store.shoopy.in" target="_blank"><span class="pink-blink">Online</span><span>অর্ডার করুন</span></a>
     <button class="small-btn btn-whatsapp" onclick="sendWhatsApp()"><span class="wa-text pink-blink">Whatsapp</span><span>ক্যাশ 🏦 আউট</span></button>
-  </div>
-
-  <button class="btn-live-toggle" onclick="toggleLiveFeed()"><span class="pink-blink">🏆</span> পুরস্কার দাতা | <span class="pink-blink">₹500</span> তালিকা</button>
+  </div><button class="btn-live-toggle" onclick="toggleLiveFeed()"><span class="pink-blink">🏆</span> পুরস্কার দাতা | <span class="pink-blink">₹500</span> তালিকা</button>
 
   <div class="video-card">
     <div class="video-header">📺 ভিডিওটি দেখে কাজ শিখুন</div>
@@ -561,7 +618,8 @@ body.dark .btn-spin {
     <button onclick="closeWinPopup()">🎁 COLLECT REWARD</button>
   </div>
 </div>
-  <div id="coinLayer"></div>
+
+<div id="coinLayer"></div>
 
 <div id="msgPopup" class="msgPopup">
   <div class="msgCard">
@@ -578,6 +636,7 @@ body.dark .btn-spin {
 
 <script>
 const PAYMENT_API="https://script.google.com/macros/s/AKfycbw_U0Zavp4KZRaNuGyWkylNqwlu8z6g4Xfk7xVFLMbBdprMy87_uIiTHdR8zGQFiRKUpQ/exec";
+
 function playClickSound() {
   var e = document.getElementById("pS");
   e && (e.currentTime = 0, e.play().catch(() => {}));
@@ -590,11 +649,27 @@ let welcomePlayed = false;
 function playWelcomeSound() {
   if (welcomePlayed) return;
   const audio = document.getElementById("welcomeSound");
-  if (audio) {
-    audio.currentTime = 0;
-    audio.play().then(() => { welcomePlayed = true; }).catch(() => {});
+  if (!audio) return;
+  audio.volume = 1;
+  audio.currentTime = 0;
+  audio.play().then(() => {
+    welcomePlayed = true;
+  }).catch(() => {
+    document.addEventListener("click", () => {
+      if(!welcomePlayed) {
+        audio.play();
+        welcomePlayed = true;
+      }
+    }, { once: true });
+  });
+}function playClapSound() {
+  const clap = document.getElementById("clapSound");
+  if (clap) {
+    clap.currentTime = 0;
+    clap.play().catch(() => {});
   }
 }
+
 function playMoneySound() {
   const audio = document.getElementById("moneySound");
   if (audio) { audio.currentTime = 0; audio.play().catch(() => {}); }
@@ -604,7 +679,21 @@ function playWhatsAppMoneySound() {
   if (audio) { audio.currentTime = 0; audio.play().catch(() => {}); }
 }
 
-window.addEventListener("load", () => { playWelcomeSound(); });
+window.addEventListener("load", () => { 
+  setTimeout(() => { playWelcomeSound(); }, 500);
+
+  // Offer GIF popup logic (5 sec delay, auto-close after 8 sec)
+  setTimeout(() => {
+    const offer = document.getElementById("offerPopup");
+    if (offer) {
+      offer.style.display = "flex";
+      setTimeout(() => {
+        offer.style.display = "none";
+      }, 8000);
+    }
+  }, 5000);
+});
+
 document.addEventListener("pointerdown", () => { playWelcomeSound(); }, { once: true });
 
 const rewardsDisplay = ["80 গ্রাম ছাতু", "800 🪙 Pt", "60 গ্রাম ছাতু", "₹ 12  💵", "1000 🪙 Pt", "₹ 10  💵", "1200 🪙 Pt", "₹ 50 💵"],
@@ -678,31 +767,37 @@ function speakBengali(e) {
 function triggerVibration() { navigator.vibrate && navigator.vibrate([200, 100, 200]); }
 
 function showWinPopup(e) {
-  document.getElementById("rewardValue").innerHTML = "₹ " + e, document.getElementById("winPopup").style.display = "flex", fireConfetti(), triggerVibration(), playAudio("rewardSound"), animateCoins(), speakBengali("অভিনন্দন! আপনি " + e + " টাকা ক্যাশব্যাক জিতেছেন! আপনার ওয়ালেটে যোগ হয়েছে।");
+  document.getElementById("rewardValue").innerHTML = "₹ " + e;
+  document.getElementById("winPopup").style.display = "flex";
+  fireConfetti();
+  triggerVibration();
+  playAudio("rewardSound");
+  playClapSound();
+  animateCoins();
+  speakBengali("অভিনন্দন! আপনি " + e + " টাকা ক্যাশব্যাক জিতেছেন! আপনার ওয়ালেটে যোগ হয়েছে।");
 }
 function closeWinPopup() { document.getElementById("winPopup").style.display = "none"; }
 
 function showWinnerPopup(e, t, n) {
   if ("cash" === e && n > 0) return void showWinPopup(n);
-  playAudio("rewardSound"), animateCoins(), triggerVibration();
+  playAudio("rewardSound");
+  playClapSound();
+  animateCoins();
+  triggerVibration();
   let o = "cash" == e ? "💸" : "point" == e ? "🪙" : "🍄", a = "cash" == e ? "#00C853" : "point" == e ? "#FF9800" : "#2E7D32";
   document.getElementById("popupText").innerHTML = `<div style="font-size:70px">🏆</div><div style="font-size:28px;font-weight:900;color:#E91E63;margin:10px 0">🎉 অভিনন্দন 🎉</div><div style="font-size:24px;font-weight:bold;color:${a}">${o} ${t}</div><div style="margin-top:15px;font-size:16px;color:#444">আপনার পুরস্কার সফলভাবে যোগ হয়েছে।</div><button onclick="document.getElementById('popup').style.display='none'" style="margin-top:20px;padding:12px 35px;background:#00C853;color:#fff;font-size:18px;font-weight:bold;border:none;border-radius:30px;cursor:pointer">✔ ঠিক আছে</button>`, document.getElementById("popup").style.display = "flex", fireConfetti(), "point" == e ? speakBengali(`অভিনন্দন! আপনি ${n} পয়েন্ট জিতেছেন`) : speakBengali(`অভিনন্দন! আপনি ${t} জিতেছেন`);
 }
-  function toggleLiveFeed() { livePopup.style.display = "block" == livePopup.style.display ? "none" : "block"; }
+
+function toggleLiveFeed() { livePopup.style.display = "block" == livePopup.style.display ? "none" : "block"; }
 
 function addFakeWinner() {
   const e = ["এখনই", "১০ সেকেন্ড আগে", "৩০ সেকেন্ড আগে", "১ মিনিট আগে", "২ মিনিট আগে"], t = document.createElement("div");
   t.className = "feed-item", t.innerHTML = `<div><div><span style="color:#0f0">🟢</span> <b>${fakeNames[Math.random()*fakeNames.length|0]}</b></div><div style="font-size:13px;color:#666">🔴 <span style="background:#ff1744;color:#fff;padding:1px 5px;border-radius:8px;font-size:11px">LIVE</span> • ${e[Math.random()*e.length|0]}</div></div><div style="color:#e91e63;font-weight:700">${rewardsDisplay[Math.random()*rewardsDisplay.length|0]}</div>`, feed.prepend(t), feed.children.length > 30 && feed.lastChild.remove();
-}
-
-function getWallet(e) { 
+  }function getWallet(e) { 
   if(!e) e = "guest";
   return JSON.parse(localStorage.getItem("wallet_" + e)) || { cash: 0, point: 0, gm: 0 }; 
 }
 
-/* =========================================
-   ২) updateWallet এ guest ID হ্যান্ডলিং
-   ========================================= */
 function updateWallet(e, t, n) {
   if(!e) {
     e = "guest";
@@ -781,15 +876,14 @@ function spinTo(e) {
   currentRotation += a + (o - currentRotation % 360), wheel.style.transform = `rotate(${currentRotation}deg)`;
 }
 
-/* =========================================
-   ১) spin() শেষে ID চেক ও Reward Save
-   ========================================= */
 async function spin() {
   if (!lock) {
     const o = document.getElementById("code").value.trim();
     if (!o) return stopAudio("spinSound"), void showMsg("⚠️", "কোড দিন", "দয়া করে আপনার কোডটি বসান!");
     
-    lock = !0, playAudio("spinSound");
+    lock = !0;
+    playAudio("spinSound");
+
     const a = rewardsDisplay.length, r = rewardsDisplay.findIndex(e => e.includes("50"));
     let s;
     Math.random() < .35 ? s = Math.random() < .5 ? (r + 1) % a : (r - 1 + a) % a : (() => { do s = Math.floor(Math.random() * a); while (s === r) })();
@@ -810,7 +904,8 @@ async function spin() {
       wheel.animate([{ transform: `rotate(${currentRotation}deg)` }, { transform: `rotate(${currentRotation+3}deg)` }, { transform: `rotate(${currentRotation-2}deg)` }, { transform: `rotate(${currentRotation+1}deg)` }, { transform: `rotate(${currentRotation}deg)` }], { duration: 450, iterations: 1 });
     }, 5600),
     setTimeout(() => {
-      stopAudio("spinSound"), wheel.classList.remove("spin-blur"), c && (c.style.animationDuration = "6s,.6s");
+      stopAudio("spinSound");
+      wheel.classList.remove("spin-blur"), c && (c.style.animationDuration = "6s,.6s");
       const e = rewardsDisplay[s], aVal = parseInt(e.replace(/\D/g, "")) || 0, rType = e.includes("Cash") || e.includes("₹") ? "cash" : e.includes("Point") || e.includes("Pt") ? "point" : "gm";
       
       let saveID = localStorage.getItem("lastPhone") || "guest";
@@ -823,16 +918,19 @@ async function spin() {
       i.className = "feed-item real-winner", i.innerHTML = `<span>👤 Guest</span><span>🎉 ${"cash"==rType?aVal+" টাকা ক্যাশ":e} পেয়েছেন</span>`, feed.prepend(i), feed.children.length > 20 && feed.removeChild(feed.lastChild), spinCount % 15 == 0 && setTimeout(showMysteryBox, 1e3);
     }, 7e3);
   }
-  }function showMysteryBox() {
+}
+
+function showMysteryBox() {
   const e = localStorage.getItem("lastPhone") || "guest",
         t = [{ type: "cash", value: 10, text: "💵 ₹10 Cashback" }, { type: "point", value: 1500, text: "🪙 1500 Points" }, { type: "gm", value: 100, text: "🍄 100g Mushroom" }, { type: "cash", value: 20, text: "💵 ₹20 Cashback" }, { type: "point", value: 1000, text: "🪙 1000 Points" }][Math.floor(5 * Math.random())];
   
   updateWallet(e, t.type, t.value);
   
-  fireConfetti(), triggerVibration(), speakBengali("অভিনন্দন! আপনি মিস্ট্রি বক্স জিতেছেন"), document.getElementById("popupText").innerHTML = "🎁 <br><br><span style='font-size:30px'>MYSTERY BOX</span><br><br><span style='font-size:28px;color:#ff1744'>" + t.text + "</span>", document.getElementById("popup").style.display = "flex", spinCount = 0, localStorage.setItem("spinCount", 0), updateProgress();
-}
-
-function openBonus() {
+  fireConfetti();
+  triggerVibration();
+  playClapSound();
+  speakBengali("অভিনন্দন! আপনি মিস্ট্রি বক্স জিতেছেন"), document.getElementById("popupText").innerHTML = "🎁 <br><br><span style='font-size:30px'>MYSTERY BOX</span><br><br><span style='font-size:28px;color:#ff1744'>" + t.text + "</span>", document.getElementById("popup").style.display = "flex", spinCount = 0, localStorage.setItem("spinCount", 0), updateProgress();
+  }function openBonus() {
   let e = localStorage.getItem("lastPhone") || "guest";
   if (localStorage.getItem("bonus_" + e) === new Date().toDateString()) return showMsg("⏱️", "বোনাস নেওয়া হয়েছে", "আজকের বোনাস নিয়েছেন! আবার ২৪ ঘণ্টা পর চেষ্টা করুন।");
   document.getElementById("bonusPopup").style.display = "flex";
@@ -841,7 +939,8 @@ function openBonus() {
 function spinBonusWheel() {
   let e = localStorage.getItem("lastPhone") || "guest";
   if (!lock) {
-    lock = !0, playAudio("spinSound");
+    lock = !0;
+    playAudio("spinSound");
     let t = +localStorage.getItem("bonusCount_" + e) || 0;
     t++;
     let n = t >= 10 ? (localStorage.setItem("bonusCount_" + e, 0), bonusRewards.indexOf("🍄 150 G")) : (localStorage.setItem("bonusCount_" + e, t), Math.floor(Math.random() * (bonusRewards.length - 1)));
@@ -859,9 +958,6 @@ function spinBonusWheel() {
   }
 }
 
-/* =========================================
-   ৩) Cashout এ guest reward ট্রান্সফার ব্যবস্থা
-   ========================================= */
 function openCashoutPopup(mode) {
   const phone = localStorage.getItem("lastPhone") || "";
   const name = localStorage.getItem("lastName") || "";
@@ -893,7 +989,6 @@ function openCashoutPopup(mode) {
       </button>
     </div>
   `;
-
   document.body.appendChild(popup);
 
   document.getElementById("cashoutClose").onclick = () => { popup.remove(); };
@@ -905,7 +1000,6 @@ function openCashoutPopup(mode) {
     if (!userName) { return showMsg("👤", "নাম লিখুন", "দয়া করে আপনার নাম লিখুন।"); }
     if (!/^\d{10}$/.test(userPhone)) { return showMsg("📱", "ভুল ফোন নাম্বার", "১০ ডিজিটের সঠিক ফোন নাম্বার দিন।"); }
 
-    // Guest wallet data merge to userPhone wallet
     let wallet = getWallet(userPhone);
     let guestWallet = getWallet("guest");
 
@@ -914,7 +1008,7 @@ function openCashoutPopup(mode) {
     wallet.gm += Number(guestWallet.gm || 0);
 
     localStorage.setItem("wallet_" + userPhone, JSON.stringify(wallet));
-    localStorage.removeItem("wallet_guest"); // Clear guest wallet
+    localStorage.removeItem("wallet_guest");
 
     const cash = Number(wallet.cash) || 0;
     const points = Number(wallet.point) || 0;
@@ -924,23 +1018,22 @@ function openCashoutPopup(mode) {
       popup.remove();
       return showMsg("💸", "পর্যাপ্ত ক্যাশ নেই", "ক্যাশ আউট করতে কমপক্ষে ₹5 Cash থাকতে হবে।");
     }
-
     const code = document.getElementById("code").value.trim() || localStorage.getItem("lastCode") || "";
 
     if (mode === "withdraw") {
       try {
-       await fetch(PAYMENT_API,{
- method:"POST",
- body:new URLSearchParams({
-   action:"withdraw",
-   code:code,
-   name:userName,
-   phone:userPhone,
-   cash:cash,
-   points:points,
-   mushroom:mushroom
- })
-}); 
+        await fetch(PAYMENT_API,{
+          method:"POST",
+          body:new URLSearchParams({
+            action:"withdraw",
+            code:code,
+            name:userName,
+            phone:userPhone,
+            cash:cash,
+            points:points,
+            mushroom:mushroom
+          })
+        }); 
       } catch (err) { console.log(err); }
 
       localStorage.setItem("wallet_" + userPhone, JSON.stringify({ cash: 0, point: points, gm: mushroom }));
@@ -956,7 +1049,6 @@ function openCashoutPopup(mode) {
       checkPayment();
       return;
     }
-
     if (mode === "whatsapp") {
       playWhatsAppMoneySound();
       const message = `✨ Cash Out Request ✨\n\n👤 নাম: ${userName}\n📞 ফোন: ${userPhone}\n\n💸 Cash: ₹${cash.toFixed(2)}\n🪙 Points: ${points}\n🍄 Mushroom: ${mushroom} gm\n\n🔑 Code: ${code}`;
@@ -973,9 +1065,7 @@ function openCashoutPopup(mode) {
       showMsg("✅", "WhatsApp Cash Out", "আপনার Cash Out Request WhatsApp-এ পাঠানো হয়েছে।");
     }
   };
-}
-
-function withdraw() { playMoneySound(); openCashoutPopup("withdraw"); }
+  }function withdraw() { playMoneySound(); openCashoutPopup("withdraw"); }
 function sendWhatsApp() { openCashoutPopup("whatsapp"); }
 
 function checkPayment() {
